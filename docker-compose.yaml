@@ -1,0 +1,86 @@
+version: '3'
+
+# networks:
+#   ssrf_network:
+#     ipam:
+#       driver: default
+#       config:
+#         - subnet: 172.150.23.0/16
+networks:
+  ssrf_network:
+    ipam:
+      config:
+        - subnet: 172.150.23.0/16
+          gateway: 172.150.23.1
+      
+services: 
+  ssrf_SSRF:
+    image: ireina007/ssrf-hub:1_ssrf
+    ports:
+      - 9080:80
+    networks:
+      ssrf_network: 
+        ipv4_address: 172.150.23.21
+ 
+  ssrf_CodeExec: 
+    image: ireina007/ssrf-hub:2_codeexec
+    networks: 
+      ssrf_network:
+        ipv4_address: 172.150.23.22
+
+  ssrf_SQLI:
+    image: ireina007/ssrf-hub:3_sqli
+    networks:
+      ssrf_network:
+        ipv4_address: 172.150.23.23
+
+  ssrf_CommandExec:
+    image: ireina007/ssrf-hub:4_commandexec
+    networks:
+      ssrf_network:
+        ipv4_address: 172.150.23.24
+
+  ssrf_XXE:
+    image: ireina007/ssrf-hub:5_xxe
+    networks:
+      ssrf_network:
+        ipv4_address: 172.150.23.25
+
+  ssrf_Tomcat:
+    image: ireina007/ssrf-hub:6_tomcat
+    networks:
+      ssrf_network:
+        ipv4_address: 172.150.23.26
+
+  ssrf_Redisunauth:
+    image: ireina007/ssrf-hub:7_redisunauth
+    networks:
+      ssrf_network:
+        ipv4_address: 172.150.23.27
+
+  ssrf_Redisauth:
+    image: ireina007/ssrf-hub:8_redisauth
+    networks:
+      ssrf_network:
+        ipv4_address: 172.150.23.28
+
+  ssrf_MySQL:
+    image: ireina007/ssrf-hub:9_mysql
+    networks:
+      ssrf_network:
+        ipv4_address: 172.150.23.29
+
+  ssrf_FastGGI_nginx:
+    image: ireina007/ssrf-hub:10_fastcgi_nginx
+    links:
+      - ssrf_FastGGI_fpm
+    networks:
+      ssrf_network:
+        ipv4_address: 172.150.23.31
+
+  ssrf_FastGGI_fpm:
+    image: ireina007/ssrf-hub:10_fastcgi_fpm
+    networks:
+      ssrf_network:
+        ipv4_address: 172.150.23.30
+

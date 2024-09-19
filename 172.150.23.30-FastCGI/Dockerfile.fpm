@@ -1,0 +1,9 @@
+FROM --platform=amd64 php:8.2.11RC1-fpm-bullseye
+
+COPY ./src-fpm /var/www/html
+
+COPY ./www.conf /usr/local/etc/php-fpm.d/www.conf
+
+RUN echo "flag_10_fastcgi{b366463484b197fd879ec8819a492454}" > /flag && chown www-data:www-data /flag
+
+CMD ["php-fpm", "-R"]

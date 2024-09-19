@@ -1,0 +1,17 @@
+version: "3.3"
+
+services:
+    web:
+        image: ssrf-hub:10_fastcgi_nginx
+        ports:
+            - "9010:80"
+        links:
+            - ssrf_FastGGI_fpm
+        network_mode: bridge
+
+    ssrf_FastGGI_fpm:
+        image: ssrf-hub:10_fastcgi_fpm
+        ports:
+            - "9000:9000"
+        network_mode: bridge
+
